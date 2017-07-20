@@ -7,7 +7,6 @@ var to5 = require('gulp-6to5');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var browserSync = require('browser-sync').create();
-var nodemon = require('gulp-nodemon');
 
 var config = {
   source: './src/',
@@ -79,22 +78,11 @@ gulp.task('img-watch', ["img"], function (done) {
   done();
 });
 
-gulp.task('nodemon', function (cb) {
-    var callbackCalled = false;
-    return nodemon({script: 'server.js'}).on('start', function () {
-        if (!callbackCalled) {
-            callbackCalled = true;
-            cb();
-        }
-    });
-});
-
-gulp.task('serve',['nodemon'], ()=> {
-  browserSync.init(null,{
-    proxy: "http://localhost:3000",
-    // server: {
-    //   baseDir: config.dist
-    // }
+gulp.task('serve', ()=> {
+  browserSync.init({
+    server: {
+      baseDir: config.dist
+    }
   });
   gulp.watch(sources.sass, ['sass']);
   gulp.watch(sources.js, ['js']);
