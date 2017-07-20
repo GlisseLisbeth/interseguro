@@ -1,0 +1,55 @@
+
+.worldBlock1 { 
+	
+
+	&__tittle{
+
+		&:after {
+			content: "____" ;
+			color:#fff;
+			position: relative;
+			right: 15%;
+			border-bottom:3px solid $color1;
+		}
+
+	}
+
+	&__img {
+		background-image: url('/assets/images/foto5.png');
+		height: 250px;
+		background-position: bottom; 
+  		background-size: cover;
+		  }
+}
+
+.worldBlock2 {
+
+	&__img {
+		background-image: url('/assets/images/foto6.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.worldBlock3 {
+
+	&__img {
+		background-image: url('/assets/images/foto7.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.worldBlock4 {
+
+	&__img {
+		background-image: url('/assets/images/foto8.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}

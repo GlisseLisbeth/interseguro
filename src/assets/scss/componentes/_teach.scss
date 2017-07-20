@@ -1,0 +1,65 @@
+
+.teachBlock1 { 
+	
+
+	&__tittle{
+
+		&:after {
+			content: "____" ;
+			color:#fff;
+			position: relative;
+			right: 15%;
+			border-bottom:3px solid $color1;
+		}
+
+	}
+
+	&__img {
+		background-image: url('/assets/images/foto20.png');
+		height: 200px;
+		background-position:bottom; 
+  		background-size: cover;
+		  }
+}
+
+.teachBlock2 {
+
+	&__img {
+		background-image: url('/assets/images/foto21.png');
+		height: 200px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.teachBlock3 {
+
+	&__img {
+		background-image: url('/assets/images/foto24.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+.teachBlock4 {
+
+	&__img {
+		background-image: url('/assets/images/foto22.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.teachBlock5 {
+
+	&__img {
+		background-image: url('/assets/images/foto25.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
