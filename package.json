@@ -1,42 +1,29 @@
 {
-  "name": "interseguro",
+  "name": "Interseguro",
   "version": "1.0.0",
-  "description": "",
+  "description": "Interseguro",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "test",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GlisseLisbeth/interseguro.git"
-  },
-  "keywords": [
-    "gulp",
-    "sass",
-    "js",
-    "API",
-    "html5",
-    "css3"
-  ],
-  "author": "",
+  "author": "MLVP-Lulu",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GlisseLisbeth/interseguro/issues"
-  },
-  "homepage": "https://github.com/GlisseLisbeth/interseguro#readme",
   "devDependencies": {
-    "browser-sync": "^2.18.12",
+    "browser-sync": "^2.18.1",
     "express": "^4.15.3",
-    "gulp-6to5": "^3.0.0",
-    "gulp-browserify": "^0.5.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-concat": "^2.6.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-nodemon": "^2.2.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "node-bourbon": "^4.2.8"
   },
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "firebase": "^4.1.3"
   }
 }

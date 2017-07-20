@@ -1,0 +1,65 @@
+
+.viewBlock1 { 
+	
+
+	&__tittle{
+
+		&:after {
+			content: "____" ;
+			color:#fff;
+			position: relative;
+			right: 15%;
+			border-bottom:3px solid $color1;
+		}
+
+	}
+
+	&__img {
+		background-image: url('/assets/images/foto25.png');
+		height: 250px;
+		background-position: bottom; 
+  		background-size: cover;
+		  }
+}
+
+.viewBlock2 {
+
+	&__img {
+		background-image: url('/assets/images/foto26.png');
+		height: 250px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.viewBlock3 {
+
+	&__img {
+		background-image: url('/assets/images/foto27.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+
+.viewBlock4 {
+
+	&__img {
+		background-image: url('/assets/images/foto28.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}
+
+.viewBlock5 {
+
+	&__img {
+		background-image: url('/assets/images/foto27.png');
+		height: 50px;
+		background-position: center; 
+  		background-size: cover;
+		  }
+}

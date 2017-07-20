@@ -1,93 +1,119 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var browserify = require('gulp-browserify');
-var rename = require('gulp-rename');
-var plumber = require('gulp-plumber');
-var to5 = require('gulp-6to5');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var browserSync = require('browser-sync').create();
 
-var config = {
-  source: './src/',
-  dist: './dist/'
-};
-var paths = {
-  assets: 'assets/',
-  html: '**/*.html',
-  sass: 'scss/**/*.scss',
-  js: 'js/**/*.js',
-  mainSass: 'scss/main.scss',
-  mainJS: 'js/**/*.js',
-  img: 'img/**'
-};
-var sources = {
-  assets: config.source + paths.assets,
-  html: config.source + paths.html,
-  sass: config.source + paths.assets + paths.sass,
-  js: config.source + paths.assets + paths.js,
-  rootSass: config.source + paths.assets + paths.mainSass,
-  rootJS: config.source + paths.assets + paths.mainJS,
-  img: config.source + paths.assets + paths.img
-};
+/* ======================================================================================================
+* Plugins utilizados
+* ======================================================================================================*/
+const gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    autoprefixer = require('gulp-autoprefixer'),
+    notify = require('gulp-notify'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+	nodemon = require('gulp-nodemon');
+    browserSync = require('browser-sync').create();
 
-gulp.task('html', ()=> {
-  gulp.src(sources.html).pipe(gulp.dest(config.dist));
-});
 
-gulp.task('img', ()=> {
-  gulp.src(sources.img).pipe(gulp.dest(config.dist+ paths.assets + "img"));
-});
 
-gulp.task('sass', ()=> {
-  gulp.src(sources.rootSass)
-    .pipe(sass({
-      outStyle: "compressed"
-    }).on("error", sass.logError))
-    .pipe(gulp.dest(config.dist + paths.assets + "css"))
-    .pipe(browserSync.stream());
 
-});
 
-gulp.task('js', ()=> {
-   gulp.src(sources.rootJS)
-      .pipe(plumber())
-      .pipe(to5())
-      .pipe(concat("app.js"))
-      .pipe(uglify())
-      .pipe(gulp.dest(config.dist + paths.assets + "js"))
-      .pipe(browserSync.stream());
+/* ======================================================================================================
+* Tareas del HTML
+* ======================================================================================================*/
+gulp.task('html', ()=>{
+	gulp.src("./src/*.html")
+	.pipe(gulp.dest("./dist"))
+	.pipe(browserSync.stream());
 });
 
 
 
-// gulp.task('js', ()=> {
-//    gulp.src(sources.rootJS)
-//       .pipe(browserify())
-//       .pipe(rename("app.js"))
-//       .pipe(gulp.dest(config.dist + paths.assets + "js"))
-//       .pipe(browserSync.stream());
-// });
 
-gulp.task('html-watch', ["html"], function (done) {
-  browserSync.reload();
-  done();
-});
-gulp.task('img-watch', ["img"], function (done) {
-  browserSync.reload();
-  done();
-});
-
-gulp.task('serve', ()=> {
-  browserSync.init({
-    server: {
-      baseDir: config.dist
-    }
-  });
-  gulp.watch(sources.sass, ['sass']);
-  gulp.watch(sources.js, ['js']);
-  gulp.watch(sources.html, ['img-watch']);
-  gulp.watch(sources.html, ['html-watch']);
+/* ======================================================================================================
+* Tarea sobre los Estilos
+* ======================================================================================================*/
+gulp.task('styles', function () {
+    gulp.src("./src/assets/scss/**/*.scss")
+    .pipe(sourcemaps.init())
+    .pipe( sass({
+            includePaths: require('node-bourbon').includePaths,
+            style: 'compressed',
+          })
+    ).on('error', notify.onError(function (error) {
+       return 'Error al compilar sass.\n Detalles en la consola.\n' + error;
+    }))
+   .pipe(autoprefixer({ browsers: ['last 2 versions'], cascade: false }))
+   .pipe(sourcemaps.write('./maps'))
+   .pipe(gulp.dest("./dist/assets/css/"))
+   .pipe(notify({ title: "SASS", message: "OK: Archivo compilado" }))
+   .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['serve']);
+/* ======================================================================================================
+* Tarea sobre los Scripts
+* ======================================================================================================*/
+gulp.task('scripts', function() {
+    return gulp.src('./src/assets/js/**/*.js')
+    .pipe(concat('app.js'))
+    //.pipe(uglify())
+    .pipe(gulp.dest('./dist/assets/js/'));
+});
+
+
+/* ======================================================================================================
+* Tarea sobre las imagenes
+* ======================================================================================================*/
+gulp.task('img', ()=>{
+	gulp.src('./src/assets/images/*.{jpg,png}')	
+	.pipe(gulp.dest('./dist/assets/images/'))
+});
+
+
+/* ======================================================================================================
+* Browser Sync
+* ======================================================================================================*/
+gulp.task('browser-sync',['nodemon'], function() {
+    browserSync.init({
+        injectChanges: true,
+        files: ['/src/*.html', './dist/**/*.{html,css,js,png,jpg}'],
+       // server: "./dist/",
+	
+		proxy: {
+			target: 'localhost:3000',
+			ws:true
+
+		}
+
+    });
+});
+
+
+gulp.task('nodemon', function (cb) {
+    var callbackCalled = false;
+    return nodemon({script: './server.js'}).on('start', function () {
+        if (!callbackCalled) {
+            callbackCalled = true;
+            cb();
+        }
+    });
+});
+
+
+
+
+
+
+/* ======================================================================================================
+* Tarea por default
+* ======================================================================================================*/
+gulp.task('watch', function() {
+	gulp.watch('./src/*.html',['html']); //vigila las tareas en html
+    gulp.watch('./src/assets/scss/**/*.scss', ['styles']); // Vigila cambios en los estilos
+    gulp.watch('./src/assets/js/**/*.js', ['scripts']); //Vijila cambios en todo los scripts
+	gulp.watch('./src/assets/img/*.{png,jpg}', ['img']); //Vijila cambios en todo los scripts
+});
+
+
+/* ======================================================================================================
+* Default Task
+* ======================================================================================================*/
+gulp.task('default', ['styles', 'scripts', 'browser-sync', 'watch','html','img']);
