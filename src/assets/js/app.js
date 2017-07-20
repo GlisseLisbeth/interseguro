@@ -4,18 +4,12 @@ const render = (root) => {
   root.empty();
   const wrapper = $('<div class="wrapper"></div>');
 
-  switch (state.window) {
+  switch (state.page) {
     case null:
-              wrapper.append(Header());
-			  wrapper.append(sectionNews());
-			  wrapper.append(sectionWorld());
-			  wrapper.append(sectionTech());
-			  wrapper.append(sectionEdu());
-			  wrapper.append(sectionOpinion());
-			  wrapper.append(Footer());
+                wrapper.append(Formulario(updated));
       break;
-   
-}
+
+  }
 
 
   root.append(wrapper);
@@ -24,9 +18,10 @@ const render = (root) => {
 
 
 const state = {
-  window:null,
-  noticiasPortada:null
- 
+  page:null,
+}
+const updated = function(){
+  render(root);
 }
 
 
@@ -34,7 +29,6 @@ $( _ => {
 
   const root = $(".root");
   render(root);
-  state.doRender = render.bind(null,root);
 
 
 

@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700");
+*,
+*:before,
+*:after {
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+img {
+  max-width: 100%;
+  height: auto; }
+
+body {
+  background: #fff;
+  font-family: "Montserrat", sans-serif !important;
+  color: #2b2b2b; }
+
+a {
+  color: #2b2b2b;
+  text-decoration: none; }
+
+p, blockquote, li {
+  font-size: 1em;
+  line-height: 1.4; }
+
+p {
+  margin: 0 0 1em 0; }
+
+h1 {
+  font-size: 2em;
+  line-height: 1.2;
+  margin: 1em 0; }
+
+h2 {
+  font-size: 1.5625em; }
+
+h3 {
+  font-size: 1.125em; }
+
+h4 {
+  font-size: 1em; }
+
+h5 {
+  font-size: 0.875em; }
+
+h6 {
+  font-size: 0.75em; }
+
+header {
+  border-bottom: 1px solid #f7b617;
+  padding-bottom: 0; }
+
+footer {
+  background-color: #f7b617;
+  text-align: center;
+  padding: 2em;
+  color: #fff; }
+
+.header {
+  display: -ms-flexbox;
+  display: flex;
+  height: 35px;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: .5em;
+  margin-bottom: .5em; }
+  .header__logo {
+    width: 60%; }
+  .header__menu {
+    height: 20px; }
+
+/*# sourceMappingURL=maps/style.css.map */
