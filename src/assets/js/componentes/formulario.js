@@ -23,11 +23,11 @@ const Formulario = (updated)=> {
   const place = $('<div class="col-sm-12"></div>');
   const placeDiv1 = $('<div class="col-sm-5"></div>');
   const divPlace = $('<div class="panel-default panel"></div>');
-  const labelDestination = $('<div class="panel-body"><small class="celeste">Destino</small></div>');
+  const labelDestination = $('<div class="panel-body divAutocomplete"><small class="celeste">Destino</small></div>');
   const inputDestination = $('<input type="text" class="input-coti" id="destino" placeholder="Ingrese destino" autocomplete="off">');
+  const autocomplete = $('<div class="autocomplete"></div>');
 
   const blankSpace = $('<div class="col-sm-2"></div>');
-  const autocomplete = $('<div class=""></div>');
 
   const placeDiv2 = $('<div class="col-sm-5"></div>');
   const divEmail = $('<div class="panel-default panel"></div>');
@@ -35,16 +35,16 @@ const Formulario = (updated)=> {
   const inputEmail = $('<input type="email" class="input-coti" id="correo" placeholder="Ingrese correo">');
 
   const pasajeros = $('<div class="col-sm-12"></div>');
-  const divPasajeros = $('<div class="col-sm-2 col-sm-offset-1"><h4 class="celeste">Pasajeros  </h4></div>');
+  const divPasajeros = $('<div class="col-sm-2"><h4 class="celeste">Pasajeros  </h4></div>');
   const pasajerosDiv1 = $('<div class="col-sm-3"></div>');
   const divForAdults = $('<div class="panel-default panel"></div>');
   const adultsDiv = $('<div class="panel-body"><small class="celeste">Adultos</small><br></div>');
-  const adults = $('<input type="number" class="input-coti" id="cantidad_adultos">');
+  const adults = $('<select class="input-coti" id="cantidad_adultos"></select>');
 
   const pasajerosDiv2 = $('<div class="col-sm-3"></div>');
   const divForChildren = $('<div class="panel-default panel"></div>');
   const childrenDiv = $('<div class="panel-body"><small class="celeste">Niños</small></div>');
-  const children = $('<input type="number" class="input-coti" id="cantidad_niños">');
+  const children = $('<select class="input-coti" id="cantidad_niños"></select>');
 
   const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button>');
 
@@ -64,6 +64,7 @@ const Formulario = (updated)=> {
 
 
   labelDestination.append(inputDestination);
+  labelDestination.append(autocomplete);
   divPlace.append(labelDestination);
   placeDiv1.append(divPlace);
   labelEmail.append(inputEmail);
@@ -89,10 +90,12 @@ const Formulario = (updated)=> {
   form.append(place);
   form.append(pasajeros);
   form.append(button);
-  form.append(autocomplete);
 
   cotiza.append(form);
   parent.append(cotiza);
+
+  Option(adults);
+  Option(children);
 
 
   inputDestination.on({

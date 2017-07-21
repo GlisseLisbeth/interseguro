@@ -18,12 +18,12 @@ const reRender = (container) => {
   });
 }
 const placeItem = (item, container) => {
-  const itemDiv = $('<div class=""></div>');
-  const img = $('<img src="assets/images/localization.jpg">');
-  const p = $('<p class="title">'+ item +'</p>');
+  const itemDiv = $('<div class="item-place"></div>');
+  const img = $('<img src="assets/images/localization.jpg" class="item-place__img">');
+  const span = $('<span class="item-place__title">'+ item +'</span>');
 
   itemDiv.append(img);
-  itemDiv.append(p);
+  itemDiv.append(span);
 
   itemDiv.on("click", (e) => {
     e.preventDefault();
@@ -34,4 +34,17 @@ const placeItem = (item, container) => {
   });
   container.show();
   return itemDiv;
+}
+const Option = (container)=> {
+  var number = "";
+  for(var i=0; i<=10; i++){
+    if(i<10){
+      number = "0" + i;
+      console.log(number);
+    }else { number = "10";}
+    container.append('<option value="'+ number +'">'+ number +'</option>');
+
+  }
+
+
 }
