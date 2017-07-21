@@ -4,15 +4,30 @@ const render = (root) => {
   root.empty();
   const wrapper = $('<div class="wrapper"></div>');
 
-  wrapper.append(Header());
   switch (state.page) {
     case null:
+                const header = $('<header id="header"></header>');
+                header.append(Header(updated));
+                wrapper.append(header);
                 wrapper.append(Banner());
                 wrapper.append(Formulario(updated));
       break;
     case 1:
-                wrapper.append(Planes(updated));
+                const header1 = $('<header class="cabecera"></header>');
+                const div1 = $('<div class="container"></div>');
+                div1.append(Header(updated));
+                div1.append(Planes(updated));
+                header1.append(div1);
+                wrapper.append(header1);
   			        wrapper.append(DetallePlanes(updated));
+        break;
+    case 2:
+                const header2 = $('<header class="cabecera"></header>');
+                const div2 = $('<div class="container"></div>');
+                div2.append(Header(updated));
+                header2.append(div2);
+                wrapper.append(header2);
+  			        wrapper.append(Ofertas(updated));
         break;
 
   }
@@ -36,11 +51,25 @@ const updated = function(){
 
 
 $( _ => {
-
-  const root = $(".root");
-  render(root);
-
-
-
+      const root = $(".root");
+      $.ajax({
+             url: 'https://testsoat.interseguro.com.pe/talentfestapi/ofertas',
+             method: 'GET',
+             contentType: 'application/json',
+             crossOrigin: true,
+             success: function(response) {
+                         if(response){
+                           state.ofertas = response;
+                           console.log(state.ofertas);
+                          render(root);
+                          dataPicker();
+                         }
+                       },
+              fail: function(request){
+               if(request){
+                 alert(request.message);
+               }
+              }
+         });
 
 });

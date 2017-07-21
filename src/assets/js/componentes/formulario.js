@@ -46,7 +46,7 @@ const Formulario = (updated)=> {
   const childrenDiv = $('<div class="panel-body"><small class="celeste">Niños</small></div>');
   const children = $('<select class="input-coti" id="cantidad_niños"></select>');
 
-  const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button>');
+  const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button></div>');
 
   div1.append(subDiv1);
 
@@ -99,10 +99,10 @@ const Formulario = (updated)=> {
 
   button.on("click",function(e){
  		 e.preventDefault();
-     console.log(section.find('.input-coti'));
+    //  console.log(section.find('.input-coti'));
 		jQuery.each(section.find('.input-coti'),(i,val)=>{
 			let attr = section.find('.input-coti').eq(i).attr('id');
-      console.log(section.find('.input-coti').eq(i).val());
+      // console.log(section.find('.input-coti').eq(i).val());
 			state.cotizacion[attr] = section.find('.input-coti').eq(i).val();
 		});
 

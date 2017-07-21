@@ -38,7 +38,7 @@ const postPlanes = (objecto, updated) => {
     				 	const pag =JSON.stringify(state.page);
     					localStorage.setItem("pagina",pag);
     					state.planes = response;
-    					console.log(state.planes)
+    					// console.log(state.planes)
     					updated();
   				  },
 				    fail: function(response){

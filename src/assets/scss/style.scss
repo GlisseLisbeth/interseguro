@@ -1,4 +1,4 @@
-@import "autocomplete";
+
 
 $color1: #ff005b;
 $color2: #006ab8;
@@ -46,6 +46,12 @@ $white: #ffffff;
 .omnes-semibold {
     font-family: "Omnes SemiBold";
 }
+@import "autocomplete";
+@import "paquetes";
+@import "datapicker";
+@import "ofertas";
+@import "planesTabla";
+
 
 body {
     margin: 0 auto;

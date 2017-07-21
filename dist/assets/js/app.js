@@ -4,15 +4,30 @@ const render = (root) => {
   root.empty();
   const wrapper = $('<div class="wrapper"></div>');
 
-  wrapper.append(Header());
   switch (state.page) {
     case null:
+                const header = $('<header id="header"></header>');
+                header.append(Header(updated));
+                wrapper.append(header);
                 wrapper.append(Banner());
                 wrapper.append(Formulario(updated));
       break;
     case 1:
-                wrapper.append(Planes(updated));
+                const header1 = $('<header class="cabecera"></header>');
+                const div1 = $('<div class="container"></div>');
+                div1.append(Header(updated));
+                div1.append(Planes(updated));
+                header1.append(div1);
+                wrapper.append(header1);
   			        wrapper.append(DetallePlanes(updated));
+        break;
+    case 2:
+                const header2 = $('<header class="cabecera"></header>');
+                const div2 = $('<div class="container"></div>');
+                div2.append(Header(updated));
+                header2.append(div2);
+                wrapper.append(header2);
+  			        wrapper.append(Ofertas(updated));
         break;
 
   }
@@ -36,45 +51,57 @@ const updated = function(){
 
 
 $( _ => {
-
-  const root = $(".root");
-  render(root);
-
-
-
+      const root = $(".root");
+      $.ajax({
+             url: 'https://testsoat.interseguro.com.pe/talentfestapi/ofertas',
+             method: 'GET',
+             contentType: 'application/json',
+             crossOrigin: true,
+             success: function(response) {
+                         if(response){
+                           state.ofertas = response;
+                           console.log(state.ofertas);
+                          render(root);
+                          dataPicker();
+                         }
+                       },
+              fail: function(request){
+               if(request){
+                 alert(request.message);
+               }
+              }
+         });
 
 });
 
 'use strict';
+const dataPicker = ()=>{
 
-// const DataPicker = ()=> {
-//
-// }
-$( function() {
-  var dateFormat = "dd/mm/yy",
+  $( function() {
+    var dateFormat = "dd/mm/yy",
     from = $( "#fecha_partida" )
-      .datepicker({
-        dateFormat: "dd/mm/yy",
-        firstDay: 0,
-        dayNamesMin: ["L", "M", "M", "J", "V", "S", "D"],
-        monthNames:
-            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-            "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-        defaultDate: "+1w",
-        changeMonth: false,
-        numberOfMonths: 1,
-        minDate: 0
-      })
-      .on( "change", function() {
-        to.datepicker( "option", "minDate", getDate( this ) );
-      }),
+    .datepicker({
+      dateFormat: "dd/mm/yy",
+      firstDay: 0,
+      dayNamesMin: ["L", "M", "M", "J", "V", "S", "D"],
+      monthNames:
+      ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+      "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      defaultDate: "+1w",
+      changeMonth: false,
+      numberOfMonths: 1,
+      minDate: 0
+    })
+    .on( "change", function() {
+      to.datepicker( "option", "minDate", getDate( this ) );
+    }),
     to = $( "#fecha_retorno" ).datepicker({
       dateFormat: "dd/mm/yy",
       firstDay: 0,
       dayNamesMin: ["L", "M", "M", "J", "V", "S", "D"],
       monthNames:
-          ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-          "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+      "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       defaultDate: "+1w",
       changeMonth: false,
       numberOfMonths: 1,
@@ -84,17 +111,19 @@ $( function() {
       from.datepicker( "option", "maxDate", getDate( this ) );
     });
 
-  function getDate( element ) {
-    var date;
-    try {
-      date = $.datepicker.parseDate( dateFormat, element.value );
-    } catch( error ) {
-      date = null;
-    }
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
 
-    return date;
-  }
-} );
+      return date;
+    }
+  } );
+  
+}
 
 "use strict";
 
@@ -136,7 +165,7 @@ const postPlanes = (objecto, updated) => {
     				 	const pag =JSON.stringify(state.page);
     					localStorage.setItem("pagina",pag);
     					state.planes = response;
-    					console.log(state.planes)
+    					// console.log(state.planes)
     					updated();
   				  },
 				    fail: function(response){
@@ -191,7 +220,6 @@ const Option = (container)=> {
   for(var i=0; i<=10; i++){
     if(i<10){
       number = "0" + i;
-      console.log(number);
     }else { number = "10";}
     container.append('<option value="'+ i +'">'+ number +'</option>');
 
@@ -217,33 +245,39 @@ const Option = (container)=> {
 
 "use strict";
 const DetallePlanes = () => {
-	const div = $('<div class="detalle">Planes</div>');
-	div.append('<div class="caracteristicas"></div>');
-	div.find('.caracteristicas').append('<ul></ul>');
+  const section = $('<section id="plan" class="container"></section>');
+  const row1 = $('<div class="row"></div>');
+  const title = $(' <div class="col-sm-12 azul"><h2 class="omnes-regular">Elige y compra en línea</h2><h1 class="omnes-semibold">EL PLAN A TU MEDIDA</h1></div>');
 
+  const col = $('<div class="col-sm-12 "></div>');
+  const div = $('<div class="detalle"></div>');
+	const container = $('<div class="container"></div>');
+	const row = $('<div class="row"></div>');
+
+
+  container.append(row);
+	div.append(container);
+
+	row.append('<div class="caracteristicas col-xs-6 col-md-6"></div>');
+	row.find('.caracteristicas').append('<ul class="beneficios"></ul>');
+	jQuery.each(state.planes[0].caracteristicas,(i,val)=>{
+		row.find('ul').append(`<li>${val.caracteristica}</li>`);
+	})
 	jQuery.each(state.planes,(i,val)=>{
-		div.append('<div class="planes"></div>');
-		div.find('.planes').eq(i).append(`<h1>${val.tipo_plan}</h1>`);
-		div.find('.planes').eq(i).append(`<p>${val.precio_plan}</p>`);
+		row.append(`<div class="planes col-xs-3 col-md-3"></div>`);
+		row.find('.planes').eq(i).append(`<h1>${val.tipo_plan}</h1>`);
+		row.find('h1').eq(i).append(`<span>${val.precio_plan}</span>`);
+			jQuery.each(val.caracteristicas,(a,b)=>{
+				row.find('.planes').eq(i).append(`<div class="icon-container"><div class="icon-${b.aplica}"></div></div>`);
+			});
 
-	console.log(val.caracteristicas);
+		});
 
-	 jQuery.each(val.caracteristicas,(a,b)=>{
-		div.find('.planes').eq(i).append(`<p class="estado">${b.aplica}</p>`);
-
-
-
-		console.log(b.caracteristica);
-
-
-    });
-
-
-	});
-
-
-	return div;
-
+    col.append(div);
+    row1.append(title);
+    row1.append(col);
+    section.append(row1);
+	return section;
 
 }
 
@@ -295,7 +329,7 @@ const Formulario = (updated)=> {
   const childrenDiv = $('<div class="panel-body"><small class="celeste">Niños</small></div>');
   const children = $('<select class="input-coti" id="cantidad_niños"></select>');
 
-  const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button>');
+  const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button></div>');
 
   div1.append(subDiv1);
 
@@ -348,10 +382,10 @@ const Formulario = (updated)=> {
 
   button.on("click",function(e){
  		 e.preventDefault();
-     console.log(section.find('.input-coti'));
+    //  console.log(section.find('.input-coti'));
 		jQuery.each(section.find('.input-coti'),(i,val)=>{
 			let attr = section.find('.input-coti').eq(i).attr('id');
-      console.log(section.find('.input-coti').eq(i).val());
+      // console.log(section.find('.input-coti').eq(i).val());
 			state.cotizacion[attr] = section.find('.input-coti').eq(i).val();
 		});
 
@@ -383,30 +417,116 @@ const Formulario = (updated)=> {
   return section;
 }
 
-'use strict';
- const Header = ()=> {
 
-   const header = $('<header id="header"></header>');
+'use strict';
+ const Header = (updated)=> {
+
    const nav = $('<nav class="navbar"></nav>');
    const logo = $('<div class="navbar-left pull-left"><img src="assets/images/logo_interseguro.png" alt="logo interseguro"><span class="omnes-medium hidden-xs">SEGURO DE VIAJES</span></div>');
    const menuDiv = $('<div class="navbar-right omnes-regular hidden-xs"></div>');
    const beneficios = $('<a href="#">Beneficios</a>');
    const ofertas = $('<a href="#">Ofertas por destinos</a>');
-   const divHamburger = $('<div class="navbar-right pull-right omnes-regular visible-xs"></div>');
-   const boton = $('<button type="button" class="btn menu visible-xs"></button>');
+   const divHamburger = $('<div class="navbar-right pull-right omnes-regular visible-xs dropdown"></div>');
+   const boton = $('<button type="button" class="btn menu visible-xs dropdown-toggle" data-toggle="dropdown"></button>');
    const botonMenu = $('<small>MENU</small><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
+   const lista = $('<ul class="dropdown-menu"></ul>');
+   const listaBene = $('<li></li>');
+   const linkBene = $('<a href="#">Beneficios</a>');
+   const listaOferta = $('<li></li>');
+   const linkOferta = $('<a href="#">Ofertas por destino</a>');
 
    menuDiv.append(beneficios);
    menuDiv.append(ofertas);
    boton.append(botonMenu);
-   divHamburger.append(boton)
+   divHamburger.append(boton);
+   listaBene.append(linkBene);
+   listaOferta.append(linkOferta);
+   lista.append(listaBene);
+   lista.append(listaOferta);
+   divHamburger.append(lista);
+
    nav.append(logo);
    nav.append(menuDiv);
    nav.append(divHamburger);
 
-   header.append(nav);
-   return header;
+   ofertas.on("click", function(e){
+     e.preventDefault();
+     state.page = 2;
+     updated();
+   });
+   linkOferta.on("click", function(e){
+     e.preventDefault();
+     state.page = 2;
+     updated();
+   });
+   return nav;
  }
+
+'use strict';
+const destinoItem = (oferta, col, update) => {
+  const contDiv = $('<div class="col-sm-4 '+col+'"></div>');
+  const destinoDiv = $('<div class="destino"></div>');
+  const imgDiv = $('<img src="'+oferta.imagen+'" alt="'+oferta.titulo+'" class="img-destino">');
+  const descriptionDiv = $('<div class="caption"></div>');
+  const detailTitle =$('<h3 class="azul"> ' +oferta.titulo+ ' </h3>');
+  const promotion = $('<div class="col-sm-9"></div>');
+  const paragraphPromo = $('<p class="omnes-regular">'+oferta.descripcion+'</p>');
+  const moreSign = $('<div class="col-sm-3 text-right"><img src="assets/images/icon_more.png" width="30" alt="boton más"><span>ver más</span</div>');
+
+  if(oferta.descuento!=0){
+    const spanPromotion = $('<button class="btn-cotizar btn-oferta"> - '+oferta.descuento+' % </button>');
+    detailTitle.append(spanPromotion);
+
+  }
+  descriptionDiv.append(detailTitle);
+  descriptionDiv.append(promotion);
+  promotion.append(paragraphPromo);
+  descriptionDiv.append(moreSign);
+
+  destinoDiv.append(imgDiv);
+  destinoDiv.append(descriptionDiv);
+  contDiv.append(destinoDiv);
+
+
+  return contDiv;
+}
+const Ofertas = (update) => {
+
+  var pag = JSON.parse(localStorage.getItem("pagina"));
+
+  const section  = $('<section id = "oferta" class="container-fluid"></section>');
+  const div = $('<div class="container"></div>');
+  const row = $('<div class="row"></div>');
+  const colTitle = $('<div class="col-sm-12 blanco"></div>');
+  const title = $('<h1 class="omnes-regular">Aprovecha nuestra oferta por</h1>');
+  const titleBig = $('<h1 class="omnes-semibold">DESTINO</h1>');
+
+  const divGallery = $('<div class="col-sm-12"></div>');
+  const rowGallery = $('<div class="row"></div>');
+
+
+  state.ofertas.forEach((oferta,index) => {
+    if(index==0){
+      rowGallery.append(destinoItem(oferta, 'col-md-8', update));
+    }else{
+      if(index!=4){
+        rowGallery.append(destinoItem(oferta, 'col-md-4', update));
+
+      }
+    }
+  });
+
+  colTitle.append(title);
+  colTitle.append(titleBig);
+  divGallery.append(rowGallery);
+  row.append(colTitle);
+  row.append(divGallery);
+  div.append(row);
+  section.append(div);
+  $('body').css({"background":"none"});
+  $('body').removeClass("container");
+  return section;
+}
 
 "use strict";
 const Planes = (update) => {
@@ -414,41 +534,81 @@ const Planes = (update) => {
 		var objetoDatos = JSON.parse(localStorage.getItem("cliente"));
 		var pag = JSON.parse(localStorage.getItem("pagina"));
 
+    const div = $('<div class="row"></div>');
 		const form = $('<form></form>');
-		const stDestino = $('<input type="text" id="destino"></input>');
-		const stFechaPartida = $('<input type="text" id="fecha_partida"></input>');
-		const stFechaRetorno = $('<input type="text" id="fecha_retorno"></input>');
-		const stCorreo = $('<input type="text" id="correo"></input>');
-		const numNinos = $('<input type="number" id="cantidad_adultos"></input>');
-		const numAduls = $('<input type="number" id="cantidad_niños"></input>');
-		const enviar = $('<button type="submit">Cotizar</button>');
+    const destinoDiv = $('<div class="col-sm-3"></div>');
+    const divDestino = $('<div class="form-group"></div>');
+    const labelDestino = $('<label><small class="">Destino</small></label>');
+    const inputDestino = $('<input type="text" class="form-control input-consult" id="destino" placeholder="">');
+    const correo = $('<input class="input-consult" style="display:none">');
 
-			form.append(stDestino);
-			form.append(stFechaPartida);
-			form.append(stFechaRetorno);
-			form.append(stCorreo);
-			form.append(numNinos);
-			form.append(numAduls);
-			form.append(enviar);
+    const dateDiv1 = $('<div class="col-sm-2"></div>');
+    const divDateOrigin = $('<div class="form-group"></div>');
+    const labelOrigin = $('<label><small class="">Partida</small></label>');
+    const inputOrigin = $('<input type="text" class="form-control input-consult" id="fecha_partida" placeholder="dd/mm/yy">');
 
-			//console.log(Object.keys(objetoDatos));
+    const arrow = $(' <div class="col-sm-1 hidden-xs hidden-sm"><div class="form-group"><img src="assets/images/icon_arrow_blue.png" alt=""></div></div>');
+
+    const dateDiv2 = $('<div class="col-sm-2"></div>');
+    const divDateRetorno = $('<div class="form-group"></div>');
+    const labelRetorno = $('<label><small class="">Retorno</small></label>');
+    const inputRetorno = $('<input type="text" class="form-control input-consult" id="fecha_retorno" placeholder="dd/mm/yy">');
+    const pasajerosDiv1 = $('<div class="col-sm-1 col-xs-4"></div>');
+    const adultsDiv = $('<div class="form-group"><label><small class="">Adultos</small></label></div>');
+    const adults = $('<select class="btn input-consult" id="cantidad_adultos"></select>');
+    const pasajerosDiv2 = $('<div class="col-sm-1 col-xs-3"></div>');
+    const childrenDiv = $('<div class="form-group"><label><small class="">Niños</small></label></div>');
+    const children = $('<select class="btn input-consult" id="cantidad_niños"></select>');
+    const button = $('<div class="col-sm-2 col-xs-12 text-center"><button class="btn-cotizar">COTIZAR</button></div>');
+
+
+      divDestino.append(labelDestino);
+      divDestino.append(inputDestino);
+      destinoDiv.append(divDestino);
+      destinoDiv.append(correo);
+
+      divDateOrigin.append(labelOrigin);
+      divDateOrigin.append(inputOrigin);
+      dateDiv1.append(divDateOrigin);
+
+      divDateRetorno.append(labelRetorno);
+      divDateRetorno.append(inputRetorno);
+      dateDiv2.append(divDateRetorno);
+
+      adultsDiv.append(adults);
+      pasajerosDiv1.append(adultsDiv);
+      childrenDiv.append(children);
+      pasajerosDiv2.append(childrenDiv);
+
+      Option(adults);
+      Option(children);
+
+      form.append(dateDiv1);
+      form.append(arrow);
+      form.append(dateDiv2);
+      form.append(destinoDiv);
+      form.append(pasajerosDiv1);
+      form.append(pasajerosDiv2);
+      form.append(button);
+      div.append(form);
 
 			jQuery.each(Object.keys(objetoDatos),(i,val)=>{
-				form.find('input').eq(i).val(objetoDatos[val]);
+          form.find('.input-consult').eq(i).val(objetoDatos[val]);
 			})
 
 			form.on("submit",function(e){
  		 		e.preventDefault();
-				state.pagina = pag;
+				state.page = pag;
 				jQuery.each(form.children(),(i,val)=>{
-					let attr = form.find('input').eq(i).attr('id');
-						state.cotizacion[attr] = $('input').eq(i).val();
-					});
-
+					let attr = form.find('.input-consult').eq(i).attr('id');
+            state.cotizacion[attr] = $('.input-consult').eq(i).val();
+				});
+        // console.log(state.cotizacion);
 				const objSerialized = JSON.stringify(state.cotizacion);
 					localStorage.setItem("cliente",objSerialized);
 					postPlanes(objSerialized,updated);
 			})
-
-		return form;
+			$('body').css({"background":"none"});
+			$('body').removeClass("container");
+		return div;
 	}

@@ -40,7 +40,6 @@ const Option = (container)=> {
   for(var i=0; i<=10; i++){
     if(i<10){
       number = "0" + i;
-      console.log(number);
     }else { number = "10";}
     container.append('<option value="'+ i +'">'+ number +'</option>');
 
