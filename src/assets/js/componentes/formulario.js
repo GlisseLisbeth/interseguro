@@ -17,7 +17,7 @@ const Formulario = (updated)=> {
   const dateDiv2 = $('<div class="col-sm-5"></div>');
   const divDateReturn = $('<div class="panel panel-default"></div>');
   const labelReturn = $('<div class="panel-body"><small class="celeste">Retorno</small><br></div>');
-  const inputReturn = $('<input type="text" class="input-coti" id="fecha_retorno" placeholder="dd/mm/yy">');
+  const inputReturn = $('<input type="text" class="input-coti" id="fecha_retorno" placeholder="dd/mm/yy" disabled>');
 
   const place = $('<div class="col-sm-12"></div>');
   const placeDiv1 = $('<div class="col-sm-5"></div>');
@@ -128,8 +128,8 @@ const Formulario = (updated)=> {
      let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
      if (regex.test($(this).val().trim())) {
      } else {
-       inputEmail.val("");
        inputEmail.focus();
+       inputEmail.append("<p style='color:red'>Correo no valido</p>")
      }
 
    });
@@ -142,6 +142,9 @@ const Formulario = (updated)=> {
       }
 
     });
+    inputOrigin.on("change", function(e){
+          inputReturn.prop("disabled",false);
+     });
 
     inputReturn.on("blur", function(e){
        let regex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
