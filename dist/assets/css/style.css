@@ -15,10 +15,10 @@ img {
 body {
   background: #fff;
   font-family: "Montserrat", sans-serif !important;
-  color: #2b2b2b; }
+  color: #006ab8; }
 
 a {
-  color: #2b2b2b;
+  color: #006ab8;
   text-decoration: none; }
 
 p, blockquote, li {
@@ -49,11 +49,11 @@ h6 {
   font-size: 0.75em; }
 
 header {
-  border-bottom: 1px solid #f7b617;
+  border-bottom: 1px solid #ff005b;
   padding-bottom: 0; }
 
 footer {
-  background-color: #f7b617;
+  background-color: #ff005b;
   text-align: center;
   padding: 2em;
   color: #fff; }
@@ -72,5 +72,77 @@ footer {
     width: 60%; }
   .header__menu {
     height: 20px; }
+
+.caracteristicas {
+  padding-top: 8em;
+  outline: 1px solid red; }
+  .caracteristicas .beneficios {
+    outline: 1px solid blue;
+    padding: 1em; }
+    .caracteristicas .beneficios li {
+      outline: 1px solid pink;
+      list-style: none;
+      margin: .8em;
+      padding: 0;
+      font-size: .9em; }
+
+.planes {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.icon-container {
+  outline: 1px solid green;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-bottom: .8em; }
+
+.icon-true {
+  width: 20px;
+  height: 20px;
+  outline: 1px solid olive;
+  background: url("../images/icon_check.png") center center no-repeat;
+  background-size: contain; }
+
+.icon-false {
+  width: 20px;
+  height: 20px;
+  outline: 1px solid olive;
+  background: url("../images/icon_cruz.png") center center no-repeat;
+  background-size: contain; }
+
+div.detalle > div.container > div.row > div.planes h1 {
+  color: #fff;
+  margin: .2em;
+  border-radius: .8em;
+  width: 6em;
+  font-size: 1.9em;
+  text-align: center;
+  padding-top: .3em;
+  padding-bottom: .3em;
+  margin-bottom: .8em; }
+  div.detalle > div.container > div.row > div.planes h1 span {
+    display: inline-block; }
+    div.detalle > div.container > div.row > div.planes h1 span:before {
+      content: "S/.";
+      font-size: .5em;
+      position: relative;
+      top: -10px;
+      padding-right: .5em; }
+    div.detalle > div.container > div.row > div.planes h1 span:after {
+      content: "Por persona";
+      font-size: .4em;
+      margin-left: .5em; }
+
+div.detalle > div.container > div.row > div:nth-child(2) h1 {
+  background: #006ab8; }
+
+div.detalle > div.container > div.row > div:nth-child(3) h1 {
+  background: #41b5e7; }
 
 /*# sourceMappingURL=maps/style.css.map */
