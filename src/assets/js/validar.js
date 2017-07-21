@@ -42,7 +42,7 @@ const Option = (container)=> {
       number = "0" + i;
       console.log(number);
     }else { number = "10";}
-    container.append('<option value="'+ number +'">'+ number +'</option>');
+    container.append('<option value="'+ i +'">'+ number +'</option>');
 
   }
 

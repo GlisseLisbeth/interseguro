@@ -10,6 +10,10 @@ const render = (root) => {
                 wrapper.append(Banner());
                 wrapper.append(Formulario(updated));
       break;
+    case 1:
+                wrapper.append(Planes(updated));
+  			        wrapper.append(DetallePlanes(updated));
+        break;
 
   }
 
@@ -22,7 +26,9 @@ const render = (root) => {
 
 const state = {
   page:null,
-  place: null
+  place: null,
+  cotizacion: {},
+  planes: null
 }
 const updated = function(){
   render(root);
@@ -39,6 +45,57 @@ $( _ => {
 
 });
 
+'use strict';
+
+// const DataPicker = ()=> {
+//
+// }
+$( function() {
+  var dateFormat = "dd/mm/yy",
+    from = $( "#fecha_partida" )
+      .datepicker({
+        dateFormat: "dd/mm/yy",
+        firstDay: 0,
+        dayNamesMin: ["L", "M", "M", "J", "V", "S", "D"],
+        monthNames:
+            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+            "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+        defaultDate: "+1w",
+        changeMonth: false,
+        numberOfMonths: 1,
+        minDate: 0
+      })
+      .on( "change", function() {
+        to.datepicker( "option", "minDate", getDate( this ) );
+      }),
+    to = $( "#fecha_retorno" ).datepicker({
+      dateFormat: "dd/mm/yy",
+      firstDay: 0,
+      dayNamesMin: ["L", "M", "M", "J", "V", "S", "D"],
+      monthNames:
+          ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+          "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      defaultDate: "+1w",
+      changeMonth: false,
+      numberOfMonths: 1,
+      minDate: 0
+    })
+    .on( "change", function() {
+      from.datepicker( "option", "maxDate", getDate( this ) );
+    });
+
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+} );
+
 "use strict";
 
 const postBuscarDestino = (destino, container) => {
@@ -54,9 +111,7 @@ const postBuscarDestino = (destino, container) => {
 
                    if(response){
                      state.place = response;
-                     console.log(state.place);
                     reRender(container);
-
                    }
 
                },
@@ -66,8 +121,31 @@ const postBuscarDestino = (destino, container) => {
              }
             }
        });
+};
 
+const postPlanes = (objecto, updated) => {
 
+	 $.ajax({
+          	url: 'https://testsoat.interseguro.com.pe/talentfestapi/cotizacion',
+          	method: 'POST',
+          	contentType: 'application/json',
+          	data: objecto,
+          	success: function(response) {
+                	//console.log(response);
+  						state.page = 1;
+    				 	const pag =JSON.stringify(state.page);
+    					localStorage.setItem("pagina",pag);
+    					state.planes = response;
+    					console.log(state.planes)
+    					updated();
+  				  },
+				    fail: function(response){
+    					if(request){
+    						alert(request.message);
+    					}
+				    }
+
+        });
 
 }
 
@@ -115,7 +193,7 @@ const Option = (container)=> {
       number = "0" + i;
       console.log(number);
     }else { number = "10";}
-    container.append('<option value="'+ number +'">'+ number +'</option>');
+    container.append('<option value="'+ i +'">'+ number +'</option>');
 
   }
 
@@ -137,12 +215,44 @@ const Option = (container)=> {
    return section;
  }
 
+"use strict";
+const DetallePlanes = () => {
+	const div = $('<div class="detalle">Planes</div>');
+	div.append('<div class="caracteristicas"></div>');
+	div.find('.caracteristicas').append('<ul></ul>');
+
+	jQuery.each(state.planes,(i,val)=>{
+		div.append('<div class="planes"></div>');
+		div.find('.planes').eq(i).append(`<h1>${val.tipo_plan}</h1>`);
+		div.find('.planes').eq(i).append(`<p>${val.precio_plan}</p>`);
+
+	console.log(val.caracteristicas);
+
+	 jQuery.each(val.caracteristicas,(a,b)=>{
+		div.find('.planes').eq(i).append(`<p class="estado">${b.aplica}</p>`);
+
+
+
+		console.log(b.caracteristica);
+
+
+    });
+
+
+	});
+
+
+	return div;
+
+
+}
+
 'use strict';
 
 const Formulario = (updated)=> {
-  const parent = $('<section></section>');
+  const section = $('<section></section>');
   const cotiza = $('<div class="row"></div>');
-  const form = $('<div id="cotiza" class="col-sm-8 col-sm-offset-2 omnes-medium"></div>');
+  const form = $('<div id="cotiza" class="col-sm-8 col-sm-offset-2 omnes-medium form"></div>');
   const div1 = $('<div class="col-sm-12"></div>');
   const subDiv1 = $('<div class="col-sm-1"><img src="assets/images/icon_cotizacion.png" class="maletin"></div><div class="col-sm-11"><h3 class="azul hidden-xs">Cotiza el seguro de tu próximo viaje</h3><h4 class="azul visible-xs">Cotiza el seguro de tu próximo viaje</h4></div>');
 
@@ -231,12 +341,26 @@ const Formulario = (updated)=> {
   form.append(button);
 
   cotiza.append(form);
-  parent.append(cotiza);
+  section.append(cotiza);
 
   Option(adults);
   Option(children);
 
+  button.on("click",function(e){
+ 		 e.preventDefault();
+     console.log(section.find('.input-coti'));
+		jQuery.each(section.find('.input-coti'),(i,val)=>{
+			let attr = section.find('.input-coti').eq(i).attr('id');
+      console.log(section.find('.input-coti').eq(i).val());
+			state.cotizacion[attr] = section.find('.input-coti').eq(i).val();
+		});
 
+		const objSerialized = JSON.stringify(state.cotizacion);
+		localStorage.setItem("cliente",objSerialized);
+    console.log(objSerialized);
+		postPlanes(objSerialized,updated);
+
+	});
   inputDestination.on({
     keypress: validarLetra,
     keyup: function(e){
@@ -244,8 +368,8 @@ const Formulario = (updated)=> {
                 postBuscarDestino($(this).val(), autocomplete);
 
               }else{
-                autocomplete.empty();
                 autocomplete.hide();
+                autocomplete.empty();
               }
           //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
           //   if(regex.test($(this).val())){
@@ -256,7 +380,7 @@ const Formulario = (updated)=> {
         }
   });
 
-  return parent;
+  return section;
 }
 
 'use strict';
@@ -283,3 +407,48 @@ const Formulario = (updated)=> {
    header.append(nav);
    return header;
  }
+
+"use strict";
+const Planes = (update) => {
+
+		var objetoDatos = JSON.parse(localStorage.getItem("cliente"));
+		var pag = JSON.parse(localStorage.getItem("pagina"));
+
+		const form = $('<form></form>');
+		const stDestino = $('<input type="text" id="destino"></input>');
+		const stFechaPartida = $('<input type="text" id="fecha_partida"></input>');
+		const stFechaRetorno = $('<input type="text" id="fecha_retorno"></input>');
+		const stCorreo = $('<input type="text" id="correo"></input>');
+		const numNinos = $('<input type="number" id="cantidad_adultos"></input>');
+		const numAduls = $('<input type="number" id="cantidad_niños"></input>');
+		const enviar = $('<button type="submit">Cotizar</button>');
+
+			form.append(stDestino);
+			form.append(stFechaPartida);
+			form.append(stFechaRetorno);
+			form.append(stCorreo);
+			form.append(numNinos);
+			form.append(numAduls);
+			form.append(enviar);
+
+			//console.log(Object.keys(objetoDatos));
+
+			jQuery.each(Object.keys(objetoDatos),(i,val)=>{
+				form.find('input').eq(i).val(objetoDatos[val]);
+			})
+
+			form.on("submit",function(e){
+ 		 		e.preventDefault();
+				state.pagina = pag;
+				jQuery.each(form.children(),(i,val)=>{
+					let attr = form.find('input').eq(i).attr('id');
+						state.cotizacion[attr] = $('input').eq(i).val();
+					});
+
+				const objSerialized = JSON.stringify(state.cotizacion);
+					localStorage.setItem("cliente",objSerialized);
+					postPlanes(objSerialized,updated);
+			})
+
+		return form;
+	}

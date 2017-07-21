@@ -13,9 +13,7 @@ const postBuscarDestino = (destino, container) => {
 
                    if(response){
                      state.place = response;
-                     console.log(state.place);
                     reRender(container);
-
                    }
 
                },
@@ -25,7 +23,30 @@ const postBuscarDestino = (destino, container) => {
              }
             }
        });
+};
 
+const postPlanes = (objecto, updated) => {
 
+	 $.ajax({
+          	url: 'https://testsoat.interseguro.com.pe/talentfestapi/cotizacion',
+          	method: 'POST',
+          	contentType: 'application/json',
+          	data: objecto,
+          	success: function(response) {
+                	//console.log(response);
+  						state.page = 1;
+    				 	const pag =JSON.stringify(state.page);
+    					localStorage.setItem("pagina",pag);
+    					state.planes = response;
+    					console.log(state.planes)
+    					updated();
+  				  },
+				    fail: function(response){
+    					if(request){
+    						alert(request.message);
+    					}
+				    }
+
+        });
 
 }

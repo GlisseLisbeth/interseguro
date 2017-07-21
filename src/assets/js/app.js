@@ -10,6 +10,10 @@ const render = (root) => {
                 wrapper.append(Banner());
                 wrapper.append(Formulario(updated));
       break;
+    case 1:
+                wrapper.append(Planes(updated));
+  			        wrapper.append(DetallePlanes(updated));
+        break;
 
   }
 
@@ -22,7 +26,9 @@ const render = (root) => {
 
 const state = {
   page:null,
-  place: null
+  place: null,
+  cotizacion: {},
+  planes: null
 }
 const updated = function(){
   render(root);

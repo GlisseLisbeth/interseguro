@@ -1,9 +1,9 @@
 'use strict';
 
 const Formulario = (updated)=> {
-  const parent = $('<section></section>');
+  const section = $('<section></section>');
   const cotiza = $('<div class="row"></div>');
-  const form = $('<div id="cotiza" class="col-sm-8 col-sm-offset-2 omnes-medium"></div>');
+  const form = $('<div id="cotiza" class="col-sm-8 col-sm-offset-2 omnes-medium form"></div>');
   const div1 = $('<div class="col-sm-12"></div>');
   const subDiv1 = $('<div class="col-sm-1"><img src="assets/images/icon_cotizacion.png" class="maletin"></div><div class="col-sm-11"><h3 class="azul hidden-xs">Cotiza el seguro de tu próximo viaje</h3><h4 class="azul visible-xs">Cotiza el seguro de tu próximo viaje</h4></div>');
 
@@ -92,12 +92,26 @@ const Formulario = (updated)=> {
   form.append(button);
 
   cotiza.append(form);
-  parent.append(cotiza);
+  section.append(cotiza);
 
   Option(adults);
   Option(children);
 
+  button.on("click",function(e){
+ 		 e.preventDefault();
+     console.log(section.find('.input-coti'));
+		jQuery.each(section.find('.input-coti'),(i,val)=>{
+			let attr = section.find('.input-coti').eq(i).attr('id');
+      console.log(section.find('.input-coti').eq(i).val());
+			state.cotizacion[attr] = section.find('.input-coti').eq(i).val();
+		});
 
+		const objSerialized = JSON.stringify(state.cotizacion);
+		localStorage.setItem("cliente",objSerialized);
+    console.log(objSerialized);
+		postPlanes(objSerialized,updated);
+
+	});
   inputDestination.on({
     keypress: validarLetra,
     keyup: function(e){
@@ -105,8 +119,8 @@ const Formulario = (updated)=> {
                 postBuscarDestino($(this).val(), autocomplete);
 
               }else{
-                autocomplete.empty();
                 autocomplete.hide();
+                autocomplete.empty();
               }
           //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
           //   if(regex.test($(this).val())){
@@ -117,5 +131,5 @@ const Formulario = (updated)=> {
         }
   });
 
-  return parent;
+  return section;
 }
