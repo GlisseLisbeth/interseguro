@@ -67,6 +67,10 @@ gulp.task('img', ()=>{
 	.pipe(gulp.dest('./dist/assets/images/'))
 });
 
+gulp.task('font', ()=>{
+	gulp.src('./src/assets/fonts/*')
+	.pipe(gulp.dest('./dist/assets/fonts/'))
+});
 
 /* ======================================================================================================
 * Browser Sync
@@ -107,13 +111,15 @@ gulp.task('nodemon', function (cb) {
 * ======================================================================================================*/
 gulp.task('watch', function() {
 	gulp.watch('./src/*.html',['html']); //vigila las tareas en html
-    gulp.watch('./src/assets/scss/**/*.scss', ['styles']); // Vigila cambios en los estilos
-    gulp.watch('./src/assets/js/**/*.js', ['scripts']); //Vijila cambios en todo los scripts
-	gulp.watch('./src/assets/img/*.{png,jpg}', ['img']); //Vijila cambios en todo los scripts
+  gulp.watch('./src/assets/scss/**/*.scss', ['styles']); // Vigila cambios en los estilos
+  gulp.watch('./src/assets/js/**/*.js', ['scripts']); //Vijila cambios en todo los scripts
+	gulp.watch('./src/assets/images/*.{png,jpg}', ['img']); //Vijila cambios en todo los scripts
+  gulp.watch('./src/assets/fonts/*', ['font']); //Vijila cambios en todo los scripts
+
 });
 
 
 /* ======================================================================================================
 * Default Task
 * ======================================================================================================*/
-gulp.task('default', ['styles', 'scripts', 'browser-sync', 'watch','html','img']);
+gulp.task('default', ['styles', 'scripts', 'browser-sync', 'watch','html','img', 'font']);

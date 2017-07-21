@@ -1,91 +1,118 @@
 'use strict';
 
 const Formulario = (updated)=> {
-  const parent = $('<div class=""></div>');
-  const form = $('<div class=""></div>');
-  const title = $('<div class="row"><div class="col-xs-12"><img src="assets/images/icon_cotizacion.png" class="title__img"><h3 class="title__h3">Cotiza el seguro de tu próximo viaje</h3></div></div>');
-  const date = $('<div class="row"></div>');
-  const divDateOrigin = $('<div class="col-xs-12 col-sm-5"></div>');
-  const labelOrigin = $('<div><label for="fecha_partida">Partida</label></div>');
-  const inputOrigin = $('<input type="date" class="form-control" id="fecha_partida" placeholder="dd/mm/yy">');
-  const iconOrigin = $('<img src="assets/images/icon_calendar.png" class="">');
+  const parent = $('<section></section>');
+  const cotiza = $('<div class="row"></div>');
+  const form = $('<div id="cotiza" class="col-sm-8 col-sm-offset-2 omnes-medium"></div>');
+  const div1 = $('<div class="col-sm-12"></div>');
+  const subDiv1 = $('<div class="col-sm-1"><img src="assets/images/icon_cotizacion.png" class="maletin"></div><div class="col-sm-11"><h3 class="azul hidden-xs">Cotiza el seguro de tu próximo viaje</h3><h4 class="azul visible-xs">Cotiza el seguro de tu próximo viaje</h4></div>');
 
-  const arrow = $('<div class="col-sm-2 hidden-xs"><img src="assets/images/icon_arrow_gray.png" class=""></div>');
+  const date = $('<div class="col-sm-12"></div>');
+  const dateDiv1 = $('<div class="col-sm-5"></div>');
+  const divDateOrigin = $('<div class="panel panel-default"></div>');
+  const labelOrigin = $('<div class="panel-body"><small class="celeste">Partida</small><br></div>');
+  const inputOrigin = $('<input type="text" class="input-coti" id="fecha_partida" placeholder="dd/mm/yy">');
 
-  const divDateReturn = $('<div class="col-xs-12 col-sm-5"></div>');
-  const labelReturn = $('<div><label for="fecha_retorno">Retorno</label></div>');
-  const inputReturn = $('<input type="date" class="form-control" id="fecha_retorno" placeholder="dd/mm/yy">');
-  const iconReturn = $('<img src="assets/images/icon_calendar.png" class="">');
+  const arrow = $('<div class="col-sm-2 text-center hidden-xs"><img src="assets/images/icon_arrow_gray.png" alt="flecha"></div>');
 
-  const place = $('<div class="row"></div>');
-  const divPlace = $('<div class="col-xs-12 col-sm-5"></div>');
-  const labelDestination = $('<div><label for="destino">Destino</label></div>');
-  const inputDestination = $('<input type="text" class="form-control" id="destino" placeholder="Ingrese destino" autocomplete="off">');
+  const dateDiv2 = $('<div class="col-sm-5"></div>');
+  const divDateReturn = $('<div class="panel panel-default"></div>');
+  const labelReturn = $('<div class="panel-body"><small class="celeste">Retorno</small><br></div>');
+  const inputReturn = $('<input type="text" class="input-coti" id="fecha_retorno" placeholder="dd/mm/yy">');
 
+  const place = $('<div class="col-sm-12"></div>');
+  const placeDiv1 = $('<div class="col-sm-5"></div>');
+  const divPlace = $('<div class="panel-default panel"></div>');
+  const labelDestination = $('<div class="panel-body"><small class="celeste">Destino</small></div>');
+  const inputDestination = $('<input type="text" class="input-coti" id="destino" placeholder="Ingrese destino" autocomplete="off">');
+
+  const blankSpace = $('<div class="col-sm-2"></div>');
   const autocomplete = $('<div class=""></div>');
-  const divEmail = $('<div class="col-xs-12 col-sm-5"></div>');
-  const labelEmail = $('<div><label for="correo">Correo electrónico</label></div>');
-  const inputEmail = $('<input type="email" class="form-control" id="correo" placeholder="Ingrese correo">');
 
-  const pasajeros = $('<div class="row"></div>');
-  const divPasajeros = $('<div class="col-xs-3">Pasajeros</div>');
-  const divForAdults = $('<div class="col-xs-3"></div>');
-  const adultsDiv = $('<div class=""><label for="cantidad_adultos">Adultos</label></div>');
-  const adults = $('<input type="number" class="form-control" id="cantidad_adultos">');
-  const divForChildren = $('<div class="col-xs-3"></div>');
-  const childrenDiv = $('<div class=""><label for="cantidad_niños">Niños</label></div>');
-  const children = $('<input type="number" class="form-control" id="cantidad_niños">');
+  const placeDiv2 = $('<div class="col-sm-5"></div>');
+  const divEmail = $('<div class="panel-default panel"></div>');
+  const labelEmail = $('<div class="panel-body"><small class="celeste">Correo electrónico</small></div>');
+  const inputEmail = $('<input type="email" class="input-coti" id="correo" placeholder="Ingrese correo">');
 
-  const button = $('<div class="col-xs-12"><button type="button">COTIZA<img src="assets/images/icon_boton_cotizacion.png"></button>')
+  const pasajeros = $('<div class="col-sm-12"></div>');
+  const divPasajeros = $('<div class="col-sm-2 col-sm-offset-1"><h4 class="celeste">Pasajeros  </h4></div>');
+  const pasajerosDiv1 = $('<div class="col-sm-3"></div>');
+  const divForAdults = $('<div class="panel-default panel"></div>');
+  const adultsDiv = $('<div class="panel-body"><small class="celeste">Adultos</small><br></div>');
+  const adults = $('<input type="number" class="input-coti" id="cantidad_adultos">');
 
+  const pasajerosDiv2 = $('<div class="col-sm-3"></div>');
+  const divForChildren = $('<div class="panel-default panel"></div>');
+  const childrenDiv = $('<div class="panel-body"><small class="celeste">Niños</small></div>');
+  const children = $('<input type="number" class="input-coti" id="cantidad_niños">');
+
+  const button = $('<div class="col-sm-12 text-center"><button class="btn-cotizar">COTIZAR</button>');
+
+  div1.append(subDiv1);
+
+  labelOrigin.append(inputOrigin);
   divDateOrigin.append(labelOrigin);
-  divDateOrigin.append(inputOrigin);
-  divDateOrigin.append(iconOrigin);
+  dateDiv1.append(divDateOrigin);
 
+  labelReturn.append(inputReturn);
   divDateReturn.append(labelReturn);
-  divDateReturn.append(inputReturn);
-  divDateReturn.append(iconReturn);
+  dateDiv2.append(divDateReturn);
 
-  date.append(divDateOrigin);
+  date.append(dateDiv1);
   date.append(arrow);
-  date.append(divDateReturn);
+  date.append(dateDiv2);
 
 
+  labelDestination.append(inputDestination);
   divPlace.append(labelDestination);
-  divPlace.append(inputDestination);
+  placeDiv1.append(divPlace);
+  labelEmail.append(inputEmail);
   divEmail.append(labelEmail);
-  divEmail.append(inputEmail);
-  place.append(divPlace);
-  place.append(divEmail);
+  placeDiv2.append(divEmail);
 
+  place.append(placeDiv1);
+  place.append(blankSpace);
+  place.append(placeDiv2);
+
+  adultsDiv.append(adults);
   divForAdults.append(adultsDiv);
-  divForAdults.append(adults);
+  pasajerosDiv1.append(divForAdults);
+  childrenDiv.append(children);
   divForChildren.append(childrenDiv);
-  divForChildren.append(children);
+  pasajerosDiv2.append(divForChildren);
   pasajeros.append(divPasajeros);
-  pasajeros.append(divForAdults);
-  pasajeros.append(divForChildren);
+  pasajeros.append(pasajerosDiv1);
+  pasajeros.append(pasajerosDiv2);
 
-  form.append(title);
+  form.append(div1);
   form.append(date);
   form.append(place);
   form.append(pasajeros);
   form.append(button);
   form.append(autocomplete);
 
-  parent.append(form);
+  cotiza.append(form);
+  parent.append(cotiza);
 
 
-  inputDestination.on("keyup", function(e){
-    if($(e.currentTarget).val() != ""){
-      postBuscarDestino($(this).val(), autocomplete);
+  inputDestination.on({
+    keypress: validarLetra,
+    keyup: function(e){
+              if($(e.currentTarget).val() != ""){
+                postBuscarDestino($(this).val(), autocomplete);
 
-    }else{
-      autocomplete.empty();
-      autocomplete.hide();
-    }
+              }else{
+                autocomplete.empty();
+                autocomplete.hide();
+              }
+          //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
+          //   if(regex.test($(this).val())){
+          //      state.userName= $(this).val();
+          //    }else{ state.userName = null;}
+          //    habilitarBtnCrearCuenta();
+          //  }
+        }
   });
-
 
   return parent;
 }

@@ -5,7 +5,11 @@ const validarLetra = (e)=>{
     e.preventDefault();
   }
 }
-
+const validarNumero = (e)=>{
+  if(e.which< 47 || e.which>58){
+    e.preventDefault();
+  }
+}
 const reRender = (container) => {
     container.empty();
     state.place.forEach((item) => {

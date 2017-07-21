@@ -4,8 +4,10 @@ const render = (root) => {
   root.empty();
   const wrapper = $('<div class="wrapper"></div>');
 
+  wrapper.append(Header());
   switch (state.page) {
     case null:
+                wrapper.append(Banner());
                 wrapper.append(Formulario(updated));
       break;
 
@@ -13,7 +15,7 @@ const render = (root) => {
 
 
   root.append(wrapper);
-  
+
 
 }
 
