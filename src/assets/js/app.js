@@ -28,7 +28,8 @@ const state = {
   page:null,
   place: null,
   cotizacion: {},
-  planes: null
+  planes: null,
+  ofertas: null,
 }
 const updated = function(){
   render(root);
