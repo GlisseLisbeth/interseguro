@@ -1,7 +1,7 @@
 'use strict';
 const destinoItem = (oferta, col, update) => {
   const contDiv = $('<div class="'+col+'"></div>');
-  const imgDiv = $('<img src="'+oferta.imagen+'" alt="'++oferta.titulo'">');
+  const imgDiv = $('<img src="'+oferta.imagen+'" alt="'+oferta.titulo+'">');
   const descriptionDiv = $('<div class="description"></div>');
   const detailTitle =$('<h1>'+oferta.titulo+'</h1>');
   const promotion = $('<div class="promotion"></div>');
@@ -25,7 +25,7 @@ const Destinos = (update) => {
 
   var pag = JSON.parse(localStorage.getItem("pagina"));
 
-  const section  = $('<section class="destinos"></section>');
+  const section  = $('<section class="ofertas"></section>');
   const row = $('<div class="row"></div>');
   const colTitle = $('<div class="col-sm-12"></div>');
   const title = $('<h1>Aprovecha nuestra oferta por</h1>');

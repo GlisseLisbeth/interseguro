@@ -10,6 +10,7 @@ const validarNumero = (e)=>{
     e.preventDefault();
   }
 }
+
 const reRender = (container) => {
     container.empty();
     state.place.forEach((item) => {
@@ -45,6 +46,4 @@ const Option = (container)=> {
     container.append('<option value="'+ i +'">'+ number +'</option>');
 
   }
-
-
 }

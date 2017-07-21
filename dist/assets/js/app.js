@@ -28,7 +28,8 @@ const state = {
   page:null,
   place: null,
   cotizacion: {},
-  planes: null
+  planes: null,
+  ofertas: null,
 }
 const updated = function(){
   render(root);
@@ -161,6 +162,7 @@ const validarNumero = (e)=>{
     e.preventDefault();
   }
 }
+
 const reRender = (container) => {
     container.empty();
     state.place.forEach((item) => {
@@ -196,8 +198,6 @@ const Option = (container)=> {
     container.append('<option value="'+ i +'">'+ number +'</option>');
 
   }
-
-
 }
 
 'use strict';
@@ -214,6 +214,86 @@ const Option = (container)=> {
    section.append(row);
    return section;
  }
+
+'use strict';
+
+const Beneficios = (update) => {
+  const divBeneficios = $('<div class="beneficios"></div>');
+  const row = $('<div class="row"></div>');
+
+  const titleDiv = $('<div class="col-xs-12 col-sm-12"></div>');
+  const title = $('<h1>Personaliza tu asistencia sumando los siguientes</h1>');
+  const titleBig = $('<span class="title-big-beneficios"></span>');
+
+  const divAsistencia = $('<div class="col-xs-3"></div>');
+  const imgAsistencia = $('<img src="assets/images/icon_beneficio_asistencia.png"> alt="beneficio_asistencia"');
+  const hr1 = $('<hr class="lines">');
+  const titleAsistencia = $('<h1>Asistencia Médica</h1>');
+  const textAsistencia = $('<p>Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar. Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar.</p>');
+
+  const divSeguros = $('<div class="col-xs-3"></div>');
+  const imgSeguros = $('<img src="assets/images/icon_beneficio_moviles.png"> alt="beneficio_moviles"');
+  const hr2 = $('<hr class="lines">');
+  const titleSeguros = $('<h1>Seguros para Dispositivo Móviles</h1>');
+  const textSeguros = $('<p>Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook). Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook)</p>');
+
+  const divCobertura = $('<div class="col-xs-3"></div>');
+  const imgCobertura = $('<img src="assets/images/icon_beneficio_equipaje.png"> alt="beneficio_equipo"');
+  const hr3 = $('<hr class="lines">');
+  const titleCobertura = $('<h1>Cobertura ante perdida de equipaje</h1>');
+  const textCobertura = $('<p>Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000. Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000</p>');
+
+  const divConsultas = $('<div class="col-xs-4"></div>');
+  const titleConsultas = $('<h4>Si aún tienes dudas o consultas</h4>');
+
+  const buttonCall = $('<button class ="button-red"></button>');
+  const iconCall = $('<i class="fa fa-phone-square" aria-hidden="true"></i>');
+  const textCallSmall = $('<span class="text-call small">Llámanos al </span>');
+  const textCallMedium  = $('<span class="text-call medium">500-00-00</span>');
+
+  const buttonChat = $('<button class="button-red"></button>');
+  const iconChat = $('<i class="fa fa-comments" aria-hidden="true"></i>');
+  const textChatSmall = $('<span class="text-chat small">Conversa por nuestro </span>');
+  const textChatMedium  = $('<span class="text-chat medium">Chat de atencion</span>');
+
+  div.append(row);
+  row.append(titleDiv);
+  titleDiv.append(title);
+  titleDiv.append(titleBig);
+
+  row.append(divAsistencia);
+  divAsistencia.append(imgAsistencia);
+  divAsistencia.append(hr1);
+  divAsistencia.append(titleAsistencia);
+  divAsistencia.append(textAsistencia);
+
+  row.append(divSeguros);
+  divSeguros.append(imgSeguros);
+  divSeguros.append(hr2);
+  divSeguros.append(titleSeguros);
+  divSeguros.append(textSeguros);
+
+  row.append(divCobertura);
+  divCobertura.append(imgCobertura);
+  divCobertura.append(hr3);
+  divCobertura.append(titleCobertura);
+  divCobertura.append(textCobertura);
+
+  row.append(divConsultas);
+  divConsultas.append(titleConsultas);
+
+  divConsultas.append(buttoncall);
+  buttonCall.append(iconCall);
+  buttonCall.append(textCallSmall);
+  buttonCall.append(textCallMedium);
+
+  divConsultas.append(buttonChat);
+  buttonChat.append(iconChat);
+  buttonChat.append(textChatSmall);
+  buttonChat.append(textChatMedium);
+  
+  return divBeneficios;
+}
 
 "use strict";
 const DetallePlanes = () => {
@@ -248,7 +328,6 @@ const DetallePlanes = () => {
 }
 
 'use strict';
-
 const Formulario = (updated)=> {
   const section = $('<section></section>');
   const cotiza = $('<div class="row"></div>');
@@ -366,19 +445,58 @@ const Formulario = (updated)=> {
     keyup: function(e){
               if($(e.currentTarget).val() != ""){
                 postBuscarDestino($(this).val(), autocomplete);
-
               }else{
                 autocomplete.hide();
                 autocomplete.empty();
               }
-          //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
-          //   if(regex.test($(this).val())){
-          //      state.userName= $(this).val();
-          //    }else{ state.userName = null;}
-          //    habilitarBtnCrearCuenta();
-          //  }
-        }
+      }
+
   });
+
+  inputEmail.on("blur", function(e){
+     let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+     if (regex.test($(this).val().trim())) {
+     } else {
+       inputEmail.val("");
+       inputEmail.focus();
+     }
+
+   });
+
+   inputOrigin.on("blur", function(e){
+      let regex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+      if (!regex.test($(this).val().trim())) {
+        inputOrigin.val("");
+        inputOrigin.focus();
+      }
+
+    });
+
+    inputReturn.on("blur", function(e){
+       let regex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+       if (!regex.test($(this).val().trim())) {
+         inputReturn.val("");
+         inputReturn.focus();
+       }
+
+     });
+
+     adults.on("change", function(e){
+       let cant_adults = $("#cantidad_adultos option:selected").val();
+       let cant_children = $("#cantidad_niños option:selected").val();
+       if(parseInt(cant_adults)+parseInt(cant_children)>=1){
+         let suma = parseInt(cant_adults)+parseInt(cant_children);
+       }
+
+     });
+     children.on("change", function(e){
+       let cant_adults = $("#cantidad_adultos option:selected").val();
+       let cant_children = $("#cantidad_niños option:selected").val();
+       if(parseInt(cant_adults)+parseInt(cant_children)>=1){
+         let suma = parseInt(cant_adults)+parseInt(cant_children);
+       }
+
+     });
 
   return section;
 }
@@ -407,6 +525,54 @@ const Formulario = (updated)=> {
    header.append(nav);
    return header;
  }
+
+'use strict';
+const destinoItem = (oferta, col, update) => {
+  const contDiv = $('<div class="'+col+'"></div>');
+  const imgDiv = $('<img src="'+oferta.imagen+'" alt="'+oferta.titulo+'">');
+  const descriptionDiv = $('<div class="description"></div>');
+  const detailTitle =$('<h1>'+oferta.titulo+'</h1>');
+  const promotion = $('<div class="promotion"></div>');
+  const spanPromotion = $('<span class="promo">'+oferta.descuento+'</span>');
+  const paragraphPromo = $('<p>'+oferta.descripcion+'</p>');
+  const moreSign = $('<img src="assets/images/icon_more.png">');
+  const moreText = $('<span>ver más</span>');
+
+  contDiv.append(imgDiv);
+  contDiv.append(descriptionDiv);
+  descriptionDiv.append(detailTitle);
+  descriptionDiv.append(promotion);
+  promotion.append(spanPromotion);
+  promotion.append(paragraphPromo);
+  promotion.append(moreSign);
+  promotion.append(moreText);
+
+  return contDiv;
+}
+const Destinos = (update) => {
+
+  var pag = JSON.parse(localStorage.getItem("pagina"));
+
+  const section  = $('<section class="ofertas"></section>');
+  const row = $('<div class="row"></div>');
+  const colTitle = $('<div class="col-sm-12"></div>');
+  const title = $('<h1>Aprovecha nuestra oferta por</h1>');
+  const titleBig = $('<span class="title-bil">DESTINO</span>');
+
+  const rowGallery = $('<div class="row"></div>');
+  let divCol = ['col-sm-6', 'col-sm-3','col-sm-3', 'col-sm-3', 'col-sm-3'];
+  state.ofertas.forEach((oferta,index) => {
+      rowGallery.append(destinoItem(oferta, divCol[index], update));
+  });
+
+  section.append(row);
+  row.append(colTitle);
+  colTitle.append(title);
+  colTitle.append(titleBig);
+  section.append(rowGallery);
+
+  return section;
+}
 
 "use strict";
 const Planes = (update) => {
