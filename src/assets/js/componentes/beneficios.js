@@ -10,19 +10,19 @@ const Beneficios = (update) => {
 
   const divAsistencia = $('<div class="col-xs-3"></div>');
   const imgAsistencia = $('<img src="assets/images/icon_beneficio_asistencia.png"> alt="beneficio_asistencia"');
-  const hr = $('<hr class="lines">');
+  const hr1 = $('<hr class="lines">');
   const titleAsistencia = $('<h1>Asistencia Médica</h1>');
   const textAsistencia = $('<p>Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar. Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar.</p>');
 
   const divSeguros = $('<div class="col-xs-3"></div>');
   const imgSeguros = $('<img src="assets/images/icon_beneficio_moviles.png"> alt="beneficio_moviles"');
-  const hr = $('<hr class="lines">');
+  const hr2 = $('<hr class="lines">');
   const titleSeguros = $('<h1>Seguros para Dispositivo Móviles</h1>');
   const textSeguros = $('<p>Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook). Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook)</p>');
 
   const divCobertura = $('<div class="col-xs-3"></div>');
   const imgCobertura = $('<img src="assets/images/icon_beneficio_equipaje.png"> alt="beneficio_equipo"');
-  const hr = $('<hr class="lines">');
+  const hr3 = $('<hr class="lines">');
   const titleCobertura = $('<h1>Cobertura ante perdida de equipaje</h1>');
   const textCobertura = $('<p>Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000. Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000</p>');
 
@@ -37,7 +37,7 @@ const Beneficios = (update) => {
   const buttonChat = $('<button class="button-red"></button>');
   const iconChat = $('<i class="fa fa-comments" aria-hidden="true"></i>');
   const textChatSmall = $('<span class="text-chat small">Conversa por nuestro </span>');
-  const textCallMedium  = $('<span class="text-chat medium">Chat de atencion</span>');
+  const textChatMedium  = $('<span class="text-chat medium">Chat de atencion</span>');
 
   div.append(row);
   row.append(titleDiv);
@@ -46,25 +46,34 @@ const Beneficios = (update) => {
 
   row.append(divAsistencia);
   divAsistencia.append(imgAsistencia);
-  divAsistencia.append(hr);
+  divAsistencia.append(hr1);
   divAsistencia.append(titleAsistencia);
   divAsistencia.append(textAsistencia);
 
   row.append(divSeguros);
   divSeguros.append(imgSeguros);
-  divSeguros.append(hr);
+  divSeguros.append(hr2);
   divSeguros.append(titleSeguros);
   divSeguros.append(textSeguros);
 
   row.append(divCobertura);
   divCobertura.append(imgCobertura);
-  divCobertura.append(hr);
+  divCobertura.append(hr3);
   divCobertura.append(titleCobertura);
   divCobertura.append(textCobertura);
 
   row.append(divConsultas);
   divConsultas.append(titleConsultas);
-  divConsultas.append(buttoncall);
 
+  divConsultas.append(buttoncall);
+  buttonCall.append(iconCall);
+  buttonCall.append(textCallSmall);
+  buttonCall.append(textCallMedium);
+
+  divConsultas.append(buttonChat);
+  buttonChat.append(iconChat);
+  buttonChat.append(textChatSmall);
+  buttonChat.append(textChatMedium);
+  
   return divBeneficios;
 }
