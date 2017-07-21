@@ -71,31 +71,21 @@ gulp.task('img', ()=>{
 /* ======================================================================================================
 * Browser Sync
 * ======================================================================================================*/
-gulp.task('browser-sync',['nodemon'], function() {
+gulp.task('browser-sync', function() {
     browserSync.init({
         injectChanges: true,
         files: ['/src/*.html', './dist/**/*.{html,css,js,png,jpg}'],
-       // server: "./dist/",
+        server: "./dist/"
 	
-		proxy: {
+	/*	proxy: {
 			target: 'localhost:3000',
 			ws:true
 
-		}
+		}*/
 
     });
 });
 
-
-gulp.task('nodemon', function (cb) {
-    var callbackCalled = false;
-    return nodemon({script: './server.js'}).on('start', function () {
-        if (!callbackCalled) {
-            callbackCalled = true;
-            cb();
-        }
-    });
-});
 
 
 

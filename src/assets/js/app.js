@@ -4,39 +4,42 @@ const render = (root) => {
   root.empty();
   const wrapper = $('<div class="wrapper"></div>');
 
-  switch (state.window) {
+  switch (state.pagina) {
     case null:
-              wrapper.append(Header());
-			  wrapper.append(sectionNews());
-			  wrapper.append(sectionWorld());
-			  wrapper.append(sectionTech());
-			  wrapper.append(sectionEdu());
-			  wrapper.append(sectionOpinion());
-			  wrapper.append(Footer());
-      break;
-   
-}
+                wrapper.append(Welcome(updated));
+				
+      break;	
 
+	 case 1:
+            wrapper.append(Planes(updated));
+			 wrapper.append(DetallePlanes(updated));
+      break; 
+	
+
+   }
 
   root.append(wrapper);
 
 }
 
+const updated = function(){
+  render(root);
+}
 
 const state = {
-  window:null,
-  noticiasPortada:null
- 
+  pagina: null,
+  cotizacion:{},
+  planes:null
+
+
 }
+
 
 
 $( _ => {
 
   const root = $(".root");
   render(root);
-  state.doRender = render.bind(null,root);
-
-
-
+ 
 
 });
