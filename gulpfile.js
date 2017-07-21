@@ -63,7 +63,7 @@ gulp.task('scripts', function() {
 * Tarea sobre las imagenes
 * ======================================================================================================*/
 gulp.task('img', ()=>{
-	gulp.src('./src/assets/images/*.{jpg,png}')	
+	gulp.src('./src/assets/images/*.{jpg,png}')
 	.pipe(gulp.dest('./dist/assets/images/'))
 });
 
@@ -76,7 +76,7 @@ gulp.task('browser-sync',['nodemon'], function() {
         injectChanges: true,
         files: ['/src/*.html', './dist/**/*.{html,css,js,png,jpg}'],
        // server: "./dist/",
-	
+
 		proxy: {
 			target: 'localhost:3000',
 			ws:true

@@ -1,8 +1,9 @@
 var express = require("express");
+
 const app = express();
 
 app.use('/', express.static('dist'));
-
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Iniciando en puerto 3000");
+const port = process.env.PORT || 5000;
+app.listen(port , () => {
+    console.log("Iniciando en puerto" + port);
 });

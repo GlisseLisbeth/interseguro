@@ -13,12 +13,14 @@ const render = (root) => {
 
 
   root.append(wrapper);
+  
 
 }
 
 
 const state = {
   page:null,
+  place: null
 }
 const updated = function(){
   render(root);
