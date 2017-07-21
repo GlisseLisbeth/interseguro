@@ -8,7 +8,7 @@ const destinoItem = (oferta, col, update) => {
   const promotion = $('<div class="col-sm-9"></div>');
   const paragraphPromo = $('<p class="omnes-regular">'+oferta.descripcion+'</p>');
   const moreSign = $('<div class="col-sm-3 text-right"><img src="assets/images/icon_more.png" width="30" alt="boton más"><span>ver más</span</div>');
-
+  console.log(oferta.imagen);
   if(oferta.descuento!=0){
     const spanPromotion = $('<button class="btn-cotizar btn-oferta"> - '+oferta.descuento+' % </button>');
     detailTitle.append(spanPromotion);

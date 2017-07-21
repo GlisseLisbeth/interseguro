@@ -25,10 +25,23 @@ const render = (root) => {
                 const header2 = $('<header class="cabecera"></header>');
                 const div2 = $('<div class="container"></div>');
                 div2.append(Header(updated));
+                div2.append(Planes(updated));
+
                 header2.append(div2);
                 wrapper.append(header2);
   			        wrapper.append(Ofertas(updated));
         break;
+    case 3:
+                const header3 = $('<header class="cabecera"></header>');
+                const div3 = $('<div class="container"></div>');
+                div3.append(Header(updated));
+                div3.append(Planes(updated));
+
+                header3.append(div3);
+                wrapper.append(header3);
+  			        wrapper.append(Beneficios(updated));
+        break;
+
 
   }
 
@@ -43,8 +56,9 @@ const state = {
   page:null,
   place: null,
   cotizacion: {},
-  planes: null
-}
+  planes: null,
+  action: 0
+};
 const updated = function(){
   render(root);
 }

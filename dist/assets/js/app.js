@@ -25,10 +25,23 @@ const render = (root) => {
                 const header2 = $('<header class="cabecera"></header>');
                 const div2 = $('<div class="container"></div>');
                 div2.append(Header(updated));
+                div2.append(Planes(updated));
+
                 header2.append(div2);
                 wrapper.append(header2);
   			        wrapper.append(Ofertas(updated));
         break;
+    case 3:
+                const header3 = $('<header class="cabecera"></header>');
+                const div3 = $('<div class="container"></div>');
+                div3.append(Header(updated));
+                div3.append(Planes(updated));
+
+                header3.append(div3);
+                wrapper.append(header3);
+  			        wrapper.append(Beneficios(updated));
+        break;
+
 
   }
 
@@ -43,8 +56,9 @@ const state = {
   page:null,
   place: null,
   cotizacion: {},
-  planes: null
-}
+  planes: null,
+  action: 0
+};
 const updated = function(){
   render(root);
 }
@@ -122,7 +136,7 @@ const dataPicker = ()=>{
       return date;
     }
   } );
-  
+
 }
 
 "use strict";
@@ -165,6 +179,7 @@ const postPlanes = (objecto, updated) => {
     				 	const pag =JSON.stringify(state.page);
     					localStorage.setItem("pagina",pag);
     					state.planes = response;
+              state.action = 1;
     					// console.log(state.planes)
     					updated();
   				  },
@@ -242,6 +257,77 @@ const Option = (container)=> {
    section.append(row);
    return section;
  }
+
+'use strict';
+
+const Beneficios = (update) => {
+  const divBeneficios = $('<div class="beneficios"></div>');
+  const row = $('<div class="row"></div>');
+
+  const titleDiv = $('<div class="col-xs-12 col-sm-12"></div>');
+  const title = $('<h1>Personaliza tu asistencia sumando los siguientes</h1>');
+  const titleBig = $('<span class="title-big-beneficios"></span>');
+
+  const divAsistencia = $('<div class="col-xs-3"></div>');
+  const imgAsistencia = $('<img src="assets/images/icon_beneficio_asistencia.png"> alt="beneficio_asistencia"');
+  const hr = $('<hr class="lines">');
+  const titleAsistencia = $('<h1>Asistencia Médica</h1>');
+  const textAsistencia = $('<p>Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar. Amplia tu monto de cobertura de USD60,000 según el viaje que vas a realizar.</p>');
+
+  const divSeguros = $('<div class="col-xs-3"></div>');
+  const imgSeguros = $('<img src="assets/images/icon_beneficio_moviles.png"> alt="beneficio_moviles"');
+  const hr = $('<hr class="lines">');
+  const titleSeguros = $('<h1>Seguros para Dispositivo Móviles</h1>');
+  const textSeguros = $('<p>Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook). Reembolso de gasta USD1,000 para tus dispositivos (Smartphone, Tablet y notebook)</p>');
+
+  const divCobertura = $('<div class="col-xs-3"></div>');
+  const imgCobertura = $('<img src="assets/images/icon_beneficio_equipaje.png"> alt="beneficio_equipo"');
+  const hr = $('<hr class="lines">');
+  const titleCobertura = $('<h1>Cobertura ante perdida de equipaje</h1>');
+  const textCobertura = $('<p>Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000. Ante la posibilidad de pérdida de equipaje, te reembolsamos USD3,000</p>');
+
+  const divConsultas = $('<div class="col-xs-4"></div>');
+  const titleConsultas = $('<h4>Si aún tienes dudas o consultas</h4>');
+
+  const buttonCall = $('<button class ="button-red"></button>');
+  const iconCall = $('<i class="fa fa-phone-square" aria-hidden="true"></i>');
+  const textCallSmall = $('<span class="text-call small">Llámanos al </span>');
+  const textCallMedium  = $('<span class="text-call medium">500-00-00</span>');
+
+  const buttonChat = $('<button class="button-red"></button>');
+  const iconChat = $('<i class="fa fa-comments" aria-hidden="true"></i>');
+  const textChatSmall = $('<span class="text-chat small">Conversa por nuestro </span>');
+  const textCallMedium  = $('<span class="text-chat medium">Chat de atencion</span>');
+
+  div.append(row);
+  row.append(titleDiv);
+  titleDiv.append(title);
+  titleDiv.append(titleBig);
+
+  row.append(divAsistencia);
+  divAsistencia.append(imgAsistencia);
+  divAsistencia.append(hr);
+  divAsistencia.append(titleAsistencia);
+  divAsistencia.append(textAsistencia);
+
+  row.append(divSeguros);
+  divSeguros.append(imgSeguros);
+  divSeguros.append(hr);
+  divSeguros.append(titleSeguros);
+  divSeguros.append(textSeguros);
+
+  row.append(divCobertura);
+  divCobertura.append(imgCobertura);
+  divCobertura.append(hr);
+  divCobertura.append(titleCobertura);
+  divCobertura.append(textCobertura);
+
+  row.append(divConsultas);
+  divConsultas.append(titleConsultas);
+  divConsultas.append(buttoncall);
+
+  return divBeneficios;
+}
 
 "use strict";
 const DetallePlanes = () => {
@@ -405,12 +491,7 @@ const Formulario = (updated)=> {
                 autocomplete.hide();
                 autocomplete.empty();
               }
-          //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
-          //   if(regex.test($(this).val())){
-          //      state.userName= $(this).val();
-          //    }else{ state.userName = null;}
-          //    habilitarBtnCrearCuenta();
-          //  }
+
         }
   });
 
@@ -424,16 +505,16 @@ const Formulario = (updated)=> {
    const nav = $('<nav class="navbar"></nav>');
    const logo = $('<div class="navbar-left pull-left"><img src="assets/images/logo_interseguro.png" alt="logo interseguro"><span class="omnes-medium hidden-xs">SEGURO DE VIAJES</span></div>');
    const menuDiv = $('<div class="navbar-right omnes-regular hidden-xs"></div>');
-   const beneficios = $('<a href="#">Beneficios</a>');
-   const ofertas = $('<a href="#">Ofertas por destinos</a>');
+   const beneficios = $('<a href="#" class="link-beneficios">Beneficios</a>');
+   const ofertas = $('<a href="#" class="link-ofertas">Ofertas por destinos</a>');
    const divHamburger = $('<div class="navbar-right pull-right omnes-regular visible-xs dropdown"></div>');
    const boton = $('<button type="button" class="btn menu visible-xs dropdown-toggle" data-toggle="dropdown"></button>');
    const botonMenu = $('<small>MENU</small><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>');
    const lista = $('<ul class="dropdown-menu"></ul>');
    const listaBene = $('<li></li>');
-   const linkBene = $('<a href="#">Beneficios</a>');
+   const linkBene = $('<a href="#" class="link-beneficios">Beneficios</a>');
    const listaOferta = $('<li></li>');
-   const linkOferta = $('<a href="#">Ofertas por destino</a>');
+   const linkOferta = $('<a href="#" class="link-ofertas">Ofertas por destino</a>');
 
    menuDiv.append(beneficios);
    menuDiv.append(ofertas);
@@ -449,14 +530,20 @@ const Formulario = (updated)=> {
    nav.append(menuDiv);
    nav.append(divHamburger);
 
-   ofertas.on("click", function(e){
+   $('.link-ofertas').on("click", function(e){
      e.preventDefault();
      state.page = 2;
+     if(state.action==0){
+
+     }
      updated();
    });
-   linkOferta.on("click", function(e){
+   $('.link-beneficios').on("click", function(e){
      e.preventDefault();
-     state.page = 2;
+     state.page = 3;
+     if(state.action==0){
+
+     }
      updated();
    });
    return nav;
@@ -472,7 +559,7 @@ const destinoItem = (oferta, col, update) => {
   const promotion = $('<div class="col-sm-9"></div>');
   const paragraphPromo = $('<p class="omnes-regular">'+oferta.descripcion+'</p>');
   const moreSign = $('<div class="col-sm-3 text-right"><img src="assets/images/icon_more.png" width="30" alt="boton más"><span>ver más</span</div>');
-
+  console.log(oferta.imagen);
   if(oferta.descuento!=0){
     const spanPromotion = $('<button class="btn-cotizar btn-oferta"> - '+oferta.descuento+' % </button>');
     detailTitle.append(spanPromotion);
@@ -533,14 +620,15 @@ const Planes = (update) => {
 
 		var objetoDatos = JSON.parse(localStorage.getItem("cliente"));
 		var pag = JSON.parse(localStorage.getItem("pagina"));
-
+		state.page=pag;
     const div = $('<div class="row"></div>');
 		const form = $('<form></form>');
     const destinoDiv = $('<div class="col-sm-3"></div>');
-    const divDestino = $('<div class="form-group"></div>');
+    const divDestino = $('<div class="form-group divAutocomplete"></div>');
     const labelDestino = $('<label><small class="">Destino</small></label>');
     const inputDestino = $('<input type="text" class="form-control input-consult" id="destino" placeholder="">');
-    const correo = $('<input class="input-consult" style="display:none">');
+    const correo = $('<input class="input-consult" id="correo" style="display:none">');
+		const autocomplete = $('<div class="autocomplete"></div>');
 
     const dateDiv1 = $('<div class="col-sm-2"></div>');
     const divDateOrigin = $('<div class="form-group"></div>');
@@ -558,12 +646,13 @@ const Planes = (update) => {
     const adults = $('<select class="btn input-consult" id="cantidad_adultos"></select>');
     const pasajerosDiv2 = $('<div class="col-sm-1 col-xs-3"></div>');
     const childrenDiv = $('<div class="form-group"><label><small class="">Niños</small></label></div>');
-    const children = $('<select class="btn input-consult" id="cantidad_niños"></select>');
+    const childrenSelect = $('<select class="btn input-consult" id="cantidad_niños"></select>');
     const button = $('<div class="col-sm-2 col-xs-12 text-center"><button class="btn-cotizar">COTIZAR</button></div>');
 
 
       divDestino.append(labelDestino);
       divDestino.append(inputDestino);
+			divDestino.append(autocomplete);
       destinoDiv.append(divDestino);
       destinoDiv.append(correo);
 
@@ -577,11 +666,11 @@ const Planes = (update) => {
 
       adultsDiv.append(adults);
       pasajerosDiv1.append(adultsDiv);
-      childrenDiv.append(children);
+      childrenDiv.append(childrenSelect);
       pasajerosDiv2.append(childrenDiv);
 
       Option(adults);
-      Option(children);
+      Option(childrenSelect);
 
       form.append(dateDiv1);
       form.append(arrow);
@@ -593,13 +682,14 @@ const Planes = (update) => {
       div.append(form);
 
 			jQuery.each(Object.keys(objetoDatos),(i,val)=>{
-          form.find('.input-consult').eq(i).val(objetoDatos[val]);
+          div.find('.input-consult').eq(i).val(objetoDatos[val]);
 			})
 
 			form.on("submit",function(e){
  		 		e.preventDefault();
 				state.page = pag;
 				jQuery.each(form.children(),(i,val)=>{
+					console.log(form.find('.input-consult').eq(i));
 					let attr = form.find('.input-consult').eq(i).attr('id');
             state.cotizacion[attr] = $('.input-consult').eq(i).val();
 				});
@@ -607,7 +697,22 @@ const Planes = (update) => {
 				const objSerialized = JSON.stringify(state.cotizacion);
 					localStorage.setItem("cliente",objSerialized);
 					postPlanes(objSerialized,updated);
-			})
+			});
+
+			inputDestino.on({
+		    keypress: validarLetra,
+		    keyup: function(e){
+		              if($(e.currentTarget).val() != ""){
+		                postBuscarDestino($(this).val(), autocomplete);
+
+		              }else{
+		                autocomplete.hide();
+		                autocomplete.empty();
+		              }
+
+		        }
+		  });
+
 			$('body').css({"background":"none"});
 			$('body').removeClass("container");
 		return div;

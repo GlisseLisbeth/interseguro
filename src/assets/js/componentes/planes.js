@@ -3,14 +3,15 @@ const Planes = (update) => {
 
 		var objetoDatos = JSON.parse(localStorage.getItem("cliente"));
 		var pag = JSON.parse(localStorage.getItem("pagina"));
-
+		state.page=pag;
     const div = $('<div class="row"></div>');
 		const form = $('<form></form>');
     const destinoDiv = $('<div class="col-sm-3"></div>');
-    const divDestino = $('<div class="form-group"></div>');
+    const divDestino = $('<div class="form-group divAutocomplete"></div>');
     const labelDestino = $('<label><small class="">Destino</small></label>');
     const inputDestino = $('<input type="text" class="form-control input-consult" id="destino" placeholder="">');
-    const correo = $('<input class="input-consult" style="display:none">');
+    const correo = $('<input class="input-consult" id="correo" style="display:none">');
+		const autocomplete = $('<div class="autocomplete"></div>');
 
     const dateDiv1 = $('<div class="col-sm-2"></div>');
     const divDateOrigin = $('<div class="form-group"></div>');
@@ -28,12 +29,13 @@ const Planes = (update) => {
     const adults = $('<select class="btn input-consult" id="cantidad_adultos"></select>');
     const pasajerosDiv2 = $('<div class="col-sm-1 col-xs-3"></div>');
     const childrenDiv = $('<div class="form-group"><label><small class="">Niños</small></label></div>');
-    const children = $('<select class="btn input-consult" id="cantidad_niños"></select>');
+    const childrenSelect = $('<select class="btn input-consult" id="cantidad_niños"></select>');
     const button = $('<div class="col-sm-2 col-xs-12 text-center"><button class="btn-cotizar">COTIZAR</button></div>');
 
 
       divDestino.append(labelDestino);
       divDestino.append(inputDestino);
+			divDestino.append(autocomplete);
       destinoDiv.append(divDestino);
       destinoDiv.append(correo);
 
@@ -47,11 +49,11 @@ const Planes = (update) => {
 
       adultsDiv.append(adults);
       pasajerosDiv1.append(adultsDiv);
-      childrenDiv.append(children);
+      childrenDiv.append(childrenSelect);
       pasajerosDiv2.append(childrenDiv);
 
       Option(adults);
-      Option(children);
+      Option(childrenSelect);
 
       form.append(dateDiv1);
       form.append(arrow);
@@ -63,13 +65,14 @@ const Planes = (update) => {
       div.append(form);
 
 			jQuery.each(Object.keys(objetoDatos),(i,val)=>{
-          form.find('.input-consult').eq(i).val(objetoDatos[val]);
+          div.find('.input-consult').eq(i).val(objetoDatos[val]);
 			})
 
 			form.on("submit",function(e){
  		 		e.preventDefault();
 				state.page = pag;
 				jQuery.each(form.children(),(i,val)=>{
+					console.log(form.find('.input-consult').eq(i));
 					let attr = form.find('.input-consult').eq(i).attr('id');
             state.cotizacion[attr] = $('.input-consult').eq(i).val();
 				});
@@ -77,7 +80,22 @@ const Planes = (update) => {
 				const objSerialized = JSON.stringify(state.cotizacion);
 					localStorage.setItem("cliente",objSerialized);
 					postPlanes(objSerialized,updated);
-			})
+			});
+
+			inputDestino.on({
+		    keypress: validarLetra,
+		    keyup: function(e){
+		              if($(e.currentTarget).val() != ""){
+		                postBuscarDestino($(this).val(), autocomplete);
+
+		              }else{
+		                autocomplete.hide();
+		                autocomplete.empty();
+		              }
+
+		        }
+		  });
+
 			$('body').css({"background":"none"});
 			$('body').removeClass("container");
 		return div;

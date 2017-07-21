@@ -46,5 +46,5 @@ const dataPicker = ()=>{
       return date;
     }
   } );
-  
+
 }

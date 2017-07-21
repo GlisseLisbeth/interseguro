@@ -122,12 +122,7 @@ const Formulario = (updated)=> {
                 autocomplete.hide();
                 autocomplete.empty();
               }
-          //   var regex = /^([a-zñáéíóúA-ZÑÁÉÍÓÚ]+[\s]*)+$/;
-          //   if(regex.test($(this).val())){
-          //      state.userName= $(this).val();
-          //    }else{ state.userName = null;}
-          //    habilitarBtnCrearCuenta();
-          //  }
+
         }
   });
 
